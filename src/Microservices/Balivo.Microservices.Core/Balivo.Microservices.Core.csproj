@@ -5,9 +5,9 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <VersionPrefix>1.0.5</VersionPrefix>
-    <Authors>Jefferson Balivo</Authors>
+    <Authors>Jefferson Siqueira Balivo</Authors>
     <Company></Company>
-    <Product>Balivo.Microservices</Product>
+    <Product>Microservices.NET</Product>
     <Description>Core (and Seedwork) tools for Microservices designed software architecture</Description>
     <Copyright>Copyright © Jefferson Siqueira Balivo 2018</Copyright>
     <Summary>Core (and Seedwork) tools for Microservices designed software architecture</Summary>
