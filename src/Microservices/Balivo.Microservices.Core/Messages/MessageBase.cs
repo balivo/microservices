@@ -14,19 +14,14 @@ namespace Balivo.Microservices.Messages
 
         public MessageBase(string systemKey, string message) : this()
         {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(systemKey) || string.IsNullOrWhiteSpace(message))
-                    throw new ArgumentNullException(string.Format("Argument null ({0})", "systemKey|message"));
+            if (string.IsNullOrWhiteSpace(systemKey))
+                throw new ArgumentNullException(nameof(systemKey));
 
-                this.SystemKey = systemKey;
-                this.Message = message;
-            }
-            catch (Exception ex)
-            {
+            if (string.IsNullOrWhiteSpace(message))
+                throw new ArgumentNullException(nameof(message));
 
-                throw;
-            }
+            SystemKey = systemKey;
+            Message = message;
         }
     }
 }

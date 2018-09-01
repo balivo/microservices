@@ -64,145 +64,85 @@ namespace Balivo.Microservices.Messages
         public MessagesContainer()
             : base()
         {
-            try
-            {
-                _BrokenRules = new List<BrokenRuleMessage>();
-                _Errors = new List<ErrorMessage>();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            _BrokenRules = new List<BrokenRuleMessage>();
+            _Errors = new List<ErrorMessage>();
         }
 
         #region [ Methods ]
 
         public void AddBrokenRule(BrokenRuleMessageTypes messageType, string systemKey, string message)
         {
-            try
-            {
-                if (_BrokenRules.Count(lbda => lbda.Type == messageType && lbda.SystemKey.Equals(systemKey)) == 0)
-                    _BrokenRules.Add(new BrokenRuleMessage(messageType, systemKey, message));
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            if (_BrokenRules.Count(lbda => lbda.Type == messageType && lbda.SystemKey.Equals(systemKey)) == 0)
+                _BrokenRules.Add(new BrokenRuleMessage(messageType, systemKey, message));
         }
 
         public void AddBrokenRule(BrokenRuleMessage brokenRule)
         {
-            try
-            {
-                if (brokenRule == null)
-                    throw new ArgumentNullException(string.Format("Argument null ({0})", "brokenRule"));
+            if (brokenRule == null)
+                throw new ArgumentNullException(nameof(brokenRule));
 
-                AddBrokenRule(brokenRule.Type, brokenRule.SystemKey, brokenRule.Message);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            AddBrokenRule(brokenRule.Type, brokenRule.SystemKey, brokenRule.Message);
         }
 
         public void AddBrokenRules(IEnumerable<BrokenRuleMessage> brokenRules)
         {
-            try
-            {
-                if (brokenRules == null)
-                    throw new ArgumentNullException(string.Format("Argument null ({0})", "brokenRules"));
+            if (brokenRules == null)
+                throw new ArgumentNullException(nameof(brokenRules));
 
-                foreach (var _brokenRule in brokenRules)
-                {
-                    AddBrokenRule(_brokenRule);
-                }
-            }
-            catch (Exception ex)
+            foreach (var _brokenRule in brokenRules)
             {
-                throw;
+                AddBrokenRule(_brokenRule);
             }
         }
 
         public BrokenRuleMessage GetBrokenRule(string systemKey)
         {
-            try
-            {
-                return _BrokenRules.FirstOrDefault(lbda => lbda.SystemKey.Equals(systemKey));
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            if (string.IsNullOrWhiteSpace(systemKey))
+                throw new ArgumentNullException(nameof(systemKey));
+
+            return _BrokenRules.FirstOrDefault(lbda => lbda.SystemKey.Equals(systemKey));
         }
 
+
         public ReadOnlyCollection<BrokenRuleMessage> GetBrokenRules(BrokenRuleMessageTypes messageType)
-        {
-            try
-            {
-                return new ReadOnlyCollection<BrokenRuleMessage>(_BrokenRules.Where(lbda => lbda.Type == messageType).ToList());
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+            => new ReadOnlyCollection<BrokenRuleMessage>(_BrokenRules.Where(lbda => lbda.Type == messageType).ToList());
 
         public void RemoveBrokenRule(string systemKey)
         {
-            try
-            {
-                _BrokenRules.RemoveAll(lbda => lbda.SystemKey.Equals(systemKey));
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            if (string.IsNullOrWhiteSpace(systemKey))
+                throw new ArgumentNullException(nameof(systemKey));
+
+            _BrokenRules.RemoveAll(lbda => lbda.SystemKey.Equals(systemKey));
         }
 
         public void AddError(string systemKey, string message)
         {
-            try
-            {
-                if (_Errors.Count(lbda => lbda.SystemKey.Equals(systemKey)) == 0)
-                    _Errors.Add(new ErrorMessage(systemKey, message));
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            if (string.IsNullOrWhiteSpace(systemKey))
+                throw new ArgumentNullException(nameof(systemKey));
+
+            if (string.IsNullOrWhiteSpace(message))
+                throw new ArgumentNullException(nameof(message));
+
+            if (_Errors.Count(lbda => lbda.SystemKey.Equals(systemKey)) == 0)
+                _Errors.Add(new ErrorMessage(systemKey, message));
         }
 
         public void AddError(ErrorMessage errorMessage)
         {
-            try
-            {
-                if (errorMessage == null)
-                    throw new ArgumentNullException(string.Format("Argument null ({0})", "errorMessage"));
+            if (errorMessage == null)
+                throw new ArgumentNullException(nameof(errorMessage));
 
-                AddError(errorMessage.SystemKey, errorMessage.Message);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            AddError(errorMessage.SystemKey, errorMessage.Message);
         }
 
         public void AddErrors(IEnumerable<ErrorMessage> errorMessages)
         {
-            try
-            {
-                if (errorMessages == null)
-                    throw new ArgumentNullException(string.Format("Argument null ({0})", "errorMessages"));
+            if (errorMessages == null)
+                throw new ArgumentNullException(nameof(errorMessages));
 
-                foreach (var _error in errorMessages)
-                {
-                    AddError(_error);
-                }
-            }
-            catch (Exception ex)
+            foreach (var _error in errorMessages)
             {
-                throw;
+                AddError(_error);
             }
         }
 
